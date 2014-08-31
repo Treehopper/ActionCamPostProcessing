@@ -1,5 +1,8 @@
 @echo off 
 
+REM requires VirtualDub 64, Avisynth 64 and Deshaker plugin
+REM create a folder in your VirtualDub install folder, copy videos as avi containers over and run this script
+
 for /r %%a in (*.avi) do (
 	echo directshowSource^("%%~fa"^) > "%%~na.avs"
 )
