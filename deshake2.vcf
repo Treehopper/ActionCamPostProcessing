@@ -1,11 +1,11 @@
 VirtualDub.audio.SetSource(1);
-VirtualDub.audio.SetMode(0);
+VirtualDub.audio.SetMode(1);
 VirtualDub.audio.SetInterleave(1,500,1,0,0);
 VirtualDub.audio.SetClipMode(1,1);
 VirtualDub.audio.SetEditMode(1);
 VirtualDub.audio.SetConversion(0,0,0,0,0);
 VirtualDub.audio.SetVolume();
-VirtualDub.audio.SetCompression();
+VirtualDub.audio.SetCompressionWithHint(2,11025,2,4,11289,512,32,"9AEHAAABAAAAAgD/AAAAAMAAQADwAAAAzAEw/4gBGP8=","MS-ADPCM");
 VirtualDub.audio.EnableFilterGraph(0);
 VirtualDub.video.SetInputFormat(0);
 VirtualDub.video.SetOutputFormat(7);
