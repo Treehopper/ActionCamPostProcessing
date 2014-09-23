@@ -40,7 +40,7 @@ VirtualDub.video.SetIVTC(0, 0, 0, 0);
 VirtualDub.video.SetCompression();
 VirtualDub.video.filters.Clear();
 VirtualDub.video.filters.Add("Deshaker v3.0");
-VirtualDub.video.filters.instance[0].Config("18|1|30|4|1|0|1|0|640|480|1|2|1000|1000|1000|1000|4|0|0|2|8|30|300|4|Deshaker.log|0|0|0|0|0|0|0|0|0|0|0|0|0|1|15|15|5|15|0|0|30|30|0|0|0|0|1|0|0|10|1000|1|88|1|1|20|5000|100|20|1");
+VirtualDub.video.filters.instance[0].Config("18|1|30|4|1|0|1|0|640|480|1|2|1000|1000|1000|1000|4|0|0|2|8|30|300|4|Deshaker.log|0|0|0|0|0|0|0|0|0|0|0|0|0|1|15|15|5|15|0|0|30|30|0|0|0|0|1|0|0|10|1000|1|88.89|1|1|20|5000|100|20|1");
 VirtualDub.audio.filters.Clear();
 """
 
