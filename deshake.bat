@@ -3,8 +3,8 @@
 REM requires VirtualDub 64, Avisynth 64 and Deshaker plugin
 REM create a folder in your VirtualDub install folder, copy this script + *.vcf files + videos as avi containers over, and run script
 
-deshaker_conf.py --pass1 > deshaker1.vcf
-deshaker_conf.py --pass2 --deshaker --smoother > deshaker2.vcf
+deshaker_conf.py --pass1 > deshake1.vcf
+deshaker_conf.py --pass2 --deshaker --smoother > deshake2.vcf
 
 for /r %%a in (*.avi) do (
 	echo directshowSource^("%%~fa"^) > "%%~na.avs"
