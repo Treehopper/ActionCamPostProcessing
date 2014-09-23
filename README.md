@@ -3,14 +3,17 @@ ActionCamPostProcessing
 
 Automatic post processing for action cam videos, such as image deshaking/stabilization
 
-TODO
+Dependencies
 =======================
-- expirement with rolling shutter and adaptive zoom
-- convert 60fps to 30 or 24 fps
+- VirtualDub
+- AviSynth
+- Python
+- docopt
 
 
 Links
 =======================
+* https://github.com/docopt/docopt/releases/tag/0.6.2
 * http://www.virtualdub.org/
 * http://www.guthspot.se/video/deshaker.htm
 * http://avisynth.nl/index.php/Main_Page
