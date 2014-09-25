@@ -18,7 +18,7 @@ VirtualDub.audio.SetMode(1);
 VirtualDub.audio.SetCompressionWithHint(85,32000,2,0,16000,1,12,"AQACAAAAQAIBAAAA","MPEG Layer-3 Codec");
 VirtualDub.audio.filters.Clear();
 VirtualDub.video.filters.Add("Deshaker v3.0");
-VirtualDub.video.filters.instance[0].Config("18|2|30|4|1|0|1|0|640|480|1|2|100|100|100|100|4|1|4|2|8|30|300|4|Deshaker.log|0|0|0|0|0|0|0|0|0|0|0|0|0|1.1|15|15|5|15|0|0|30|30|0|0|1|0|1|0|0|10|1000|1|88.89|1|1|20|5000|100|20|1");
+VirtualDub.video.filters.instance[0].Config("18|2|30|4|1|0|1|0|640|480|1|2|100|100|100|100|4|1|3|2|8|30|300|4|Deshaker.log|0|0|0|0|0|0|0|0|0|0|0|0|0|1.1|15|15|5|15|0|0|30|30|0|0|1|0|1|0|0|10|1000|1|88.89|1|1|20|5000|100|20|1");
 VirtualDub.video.filters.Add("smoother");
 VirtualDub.video.filters.instance[1].Config(2000,0);
 VirtualDub.audio.filters.Clear();
