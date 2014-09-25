@@ -1,5 +1,5 @@
 """
-Usage: deshaker_conf.py [--deshaker=N] [--smoother] [--vcompress] [--acompress]
+Usage: deshaker_conf.py [--deshaker=N [--ds-motion-smoothness=H,V,R,Z]] [--smoother] [--vcompress] [--acompress]
        deshaker_conf.py (-h | --help)
 
 Options:
@@ -9,7 +9,7 @@ Options:
 
 Examples:
     deshaker_conf.py --deshaker=1
-    deshaker_conf.py --smoother --acompress --vcompress --deshaker=2 --pass2 
+    deshaker_conf.py --deshaker=2 --ds-motion-smoothness=100,100,100,100 --acompress --vcompress --smoother
 """
 
 # Docopt is a library for parsing command line arguments
@@ -61,7 +61,7 @@ filters_end = filters_begin
 
 deshaker_cfg = """\
 VirtualDub.video.filters.Add("Deshaker v3.0");
-VirtualDub.video.filters.instance[{filters_count}].Config("18|{pass_nr}|30|4|1|0|1|0|640|480|1|2|100|100|100|100|4|1|4|2|8|30|300|4|Deshaker.log|0|0|0|0|0|0|0|0|0|0|0|0|0|1|15|15|5|15|0|0|30|30|0|0|1|0|1|0|0|10|1000|1|88.89|1|1|20|5000|100|20|1");
+VirtualDub.video.filters.instance[{filters_count}].Config("18|{pass_nr}|30|4|1|0|1|0|640|480|1|2|{ms_h}|{ms_v}|{ms_r}|{ms_z}|4|1|4|2|8|30|300|4|Deshaker.log|0|0|0|0|0|0|0|0|0|0|0|0|0|1|15|15|5|15|0|0|30|30|0|0|1|0|1|0|0|10|1000|1|88.89|1|1|20|5000|100|20|1");
 """
 
 smoother_cfg = """\
@@ -91,14 +91,24 @@ if __name__ == '__main__':
         # filters
         smoother = arguments['--smoother']
 
+
+
+
         pass_nr = arguments['--deshaker']
         if(not pass_nr is None):
             pass_nr = int(arguments['--deshaker'])
+            motion_smoothness = arguments['--ds-motion-smoothness'].split(",")
+            if(len(motion_smoothness) != 4):
+                raise Exception("Supply all four motion smoothness values")
+            ms_h = motion_smoothness[0]
+            ms_v = motion_smoothness[1]
+            ms_r = motion_smoothness[2]
+            ms_z = motion_smoothness[3]
 
         filters_count = 0
         pass2_conf += filters_begin
         if(pass_nr in {1,2}):
-            pass2_conf += deshaker_cfg.format(filters_count=filters_count, pass_nr=pass_nr)
+            pass2_conf += deshaker_cfg.format(filters_count=filters_count, pass_nr=pass_nr, ms_h=ms_h, ms_v=ms_v, ms_r=ms_r, ms_z=ms_z)
             filters_count += 1
         if(smoother):
             pass2_conf += smoother_cfg.format(filters_count=filters_count)
