@@ -1,5 +1,5 @@
 """
-Usage: deshaker_conf.py [--deshaker=N [--ds-motion-smoothness=H,V,R,Z] [--ds-zoom-factor=X] [--ds-edge-compensation=C]] [--smoother] [--vcompress] [--acompress]
+Usage: deshaker_conf.py [--deshaker=N [--ds-motion-smoothness=H,V,R,Z] [--ds-zoom-factor=X] [--ds-edge-compensation=C] [--ds-rolling-shutter=S]] [--smoother] [--vcompress] [--acompress]
        deshaker_conf.py (-h | --help)
 
 Options:
@@ -10,7 +10,7 @@ Options:
 
 Examples:
     deshaker_conf.py --deshaker=1
-    deshaker_conf.py --deshaker=2 --ds-motion-smoothness=100,100,100,100 --ds-zoom-factor=1.1 --ds-edge-compensation=3 --acompress --vcompress --smoother
+    deshaker_conf.py --deshaker=2 --ds-motion-smoothness=100,100,100,100 --ds-zoom-factor=1.1 --ds-edge-compensation=3 --ds-rolling-shutter=88.89 --acompress --vcompress --smoother
 """
 
 # Docopt is a library for parsing command line arguments
@@ -62,7 +62,7 @@ filters_end = filters_begin
 
 deshaker_cfg = """\
 VirtualDub.video.filters.Add("Deshaker v3.0");
-VirtualDub.video.filters.instance[{filters_count}].Config("18|{pass_nr}|30|4|1|0|1|0|640|480|1|2|{ms_h}|{ms_v}|{ms_r}|{ms_z}|4|1|{edge_compensation}|2|8|30|300|4|Deshaker.log|0|0|0|0|0|0|0|0|0|0|0|0|0|{zoom_factor}|15|15|5|15|0|0|30|30|0|0|1|0|1|0|0|10|1000|1|88.89|1|1|20|5000|100|20|1");
+VirtualDub.video.filters.instance[{filters_count}].Config("18|{pass_nr}|30|4|1|0|1|0|640|480|1|2|{ms_h}|{ms_v}|{ms_r}|{ms_z}|4|1|{edge_compensation}|2|8|30|300|4|Deshaker.log|0|0|0|0|0|0|0|0|0|0|0|0|0|{zoom_factor}|15|15|5|15|0|0|30|30|0|0|{rolling_shutter_on}|0|1|0|0|10|1000|1|{rolling_shutter}|1|1|20|5000|100|20|1");
 """
 
 smoother_cfg = """\
@@ -113,6 +113,12 @@ if __name__ == '__main__':
         if(not zoom_factor is None):
             zoom_factor = float(zoom_factor)
 
+        rolling_shutter_on = 0
+        rolling_shutter = arguments['--ds-rolling-shutter']
+        if(not rolling_shutter is None):
+            rolling_shutter = float(rolling_shutter)
+            rolling_shutter_on = 1
+
         edge_compensation = arguments['--ds-edge-compensation']
         if(not edge_compensation is None):
             edge_compensation = int(edge_compensation)
@@ -120,7 +126,7 @@ if __name__ == '__main__':
         filters_count = 0
         pass2_conf += filters_begin
         if(pass_nr in {1,2}):
-            pass2_conf += deshaker_cfg.format(filters_count=filters_count, pass_nr=pass_nr, ms_h=ms_h, ms_v=ms_v, ms_r=ms_r, ms_z=ms_z, zoom_factor=zoom_factor, edge_compensation=edge_compensation)
+            pass2_conf += deshaker_cfg.format(filters_count=filters_count, pass_nr=pass_nr, ms_h=ms_h, ms_v=ms_v, ms_r=ms_r, ms_z=ms_z, zoom_factor=zoom_factor, edge_compensation=edge_compensation, rolling_shutter=rolling_shutter, rolling_shutter_on=rolling_shutter_on)
             filters_count += 1
         if(smoother):
             pass2_conf += smoother_cfg.format(filters_count=filters_count)
