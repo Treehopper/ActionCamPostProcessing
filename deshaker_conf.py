@@ -101,7 +101,7 @@ if __name__ == '__main__':
 
         pass_nr = arguments['--deshaker']
         if(not pass_nr is None):
-            pass_nr = int(arguments['--deshaker'])
+            pass_nr = int(pass_nr)
 
         motion_smoothness = arguments['--ds-motion-smoothness']
         if(not motion_smoothness is None):
