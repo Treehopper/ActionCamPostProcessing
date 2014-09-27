@@ -1,16 +1,17 @@
 """
-Usage: deshaker_conf.py [--deshaker=N [--ds-motion-smoothness=H,V,R,Z] [--ds-zoom-factor=X] [--ds-edge-compensation=C] [--ds-rolling-shutter=S]] [--smoother] [--vcompress] [--acompress]
+Usage: deshaker_conf.py [--deshaker=N [--ds-motion-smoothness=H,V,R,Z] [--ds-zoom-factor=X] [--ds-edge-compensation=C] [--ds-rolling-shutter=S]] [--convert-fps=F] [--smoother] [--vcompress] [--acompress]
        deshaker_conf.py (-h | --help)
 
 Options:
     -h, --help
     --deshaker=N  Include deshaker configuration in pass 1 or 2
     --smoother  Include smoother configuration
+	--convert-fps=F Set target framerate to F
 	--ds-edge-compensation=C C is a value between 0 and 4: 0:None (large borders), 1:Adaptive zoom average (some borders), 2:Adaptive zoom full (no borders), 3:Fixed zoom (no borders), 4:Adaptive zoom average + fixed zoom (no borders)
 
 Examples:
     deshaker_conf.py --deshaker=1
-    deshaker_conf.py --deshaker=2 --ds-motion-smoothness=100,100,100,100 --ds-zoom-factor=1.1 --ds-edge-compensation=3 --ds-rolling-shutter=88.89 --acompress --vcompress --smoother
+    deshaker_conf.py --deshaker=2 --ds-motion-smoothness=100,100,100,100 --ds-zoom-factor=1.1 --ds-edge-compensation=3 --ds-rolling-shutter=88.89 --convert-fps=30 --acompress --vcompress --smoother
 """
 
 # Docopt is a library for parsing command line arguments
@@ -70,6 +71,9 @@ VirtualDub.video.filters.Add("smoother");
 VirtualDub.video.filters.instance[{filters_count}].Config(2000,0);
 """
 
+convert_fps_cfg = """\
+VirtualDub.video.SetTargetFrameRate({convert_fps_target},{convert_fps_factor});
+"""
 
 if __name__ == '__main__':
     try:
@@ -112,6 +116,12 @@ if __name__ == '__main__':
         zoom_factor = arguments['--ds-zoom-factor']
         if(not zoom_factor is None):
             zoom_factor = float(zoom_factor)
+
+        convert_fps_factor=10000
+        convert_fps = arguments['--convert-fps']
+        if(not convert_fps is None):
+            convert_fps_target = convert_fps_factor * int(convert_fps)
+            pass2_conf += convert_fps_cfg.format(convert_fps_target=convert_fps_target, convert_fps_factor=convert_fps_factor)
 
         rolling_shutter_on = 0
         rolling_shutter = arguments['--ds-rolling-shutter']
